@@ -1,12 +1,5 @@
 package com.browserstack.automate.ci.jenkins;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.tools.ant.FileScanner;
-import org.apache.tools.ant.types.FileSet;
-import org.kohsuke.stapler.AncestorInPath;
-import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.StaplerRequest;
-
 import com.browserstack.automate.ci.common.analytics.Analytics;
 import com.browserstack.automate.ci.jenkins.local.LocalConfig;
 import com.cloudbees.plugins.credentials.CredentialsMatchers;
@@ -23,6 +16,12 @@ import hudson.tasks.BuildWrapperDescriptor;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
+import org.apache.tools.ant.FileScanner;
+import org.apache.tools.ant.types.FileSet;
+import org.kohsuke.stapler.AncestorInPath;
+import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.StaplerRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,13 +35,19 @@ public final class BrowserStackBuildWrapperDescriptor extends BuildWrapperDescri
     private LocalConfig localConfig;
     private boolean usageStatsEnabled;
 
+    private final Analytics analytics;
+
     public BrowserStackBuildWrapperDescriptor() {
         super(BrowserStackBuildWrapper.class);
         load();
 
-        Analytics.setEnabled(usageStatsEnabled);
-        if (usageStatsEnabled) {
-            Analytics.trackInstall();
+        analytics = Analytics.getInstance();
+        if (analytics != null) {
+            analytics.setEnabled(usageStatsEnabled);
+
+            if (usageStatsEnabled) {
+                analytics.trackInstall();
+            }
         }
     }
 
@@ -57,7 +62,10 @@ public final class BrowserStackBuildWrapperDescriptor extends BuildWrapperDescri
             JSONObject config = formData.getJSONObject(NAMESPACE);
             req.bindJSON(this, config);
             save();
-            Analytics.setEnabled(!config.has("usageStatsEnabled") || config.getBoolean("usageStatsEnabled"));
+
+            if (analytics != null) {
+                analytics.setEnabled(!config.has("usageStatsEnabled") || config.getBoolean("usageStatsEnabled"));
+            }
         }
 
         return true;

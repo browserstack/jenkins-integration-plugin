@@ -1,5 +1,6 @@
 package com.browserstack.automate.ci.jenkins;
 
+import com.browserstack.automate.ci.jenkins.analytics.JenkinsAnalyticsDataProvider;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -62,7 +63,8 @@ public class BrowserStackCredentials extends BaseCredentials implements Standard
         this.description = Util.fixNull(description);
         this.username = Util.fixNull(username);
         this.accesskey = Secret.fromString(accesskey);
-        Analytics.trackInstall();
+
+        Analytics.createInstance(new JenkinsAnalyticsDataProvider()).trackInstall();
     }
 
     @Exported

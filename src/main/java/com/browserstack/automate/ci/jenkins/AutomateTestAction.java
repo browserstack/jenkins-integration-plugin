@@ -64,7 +64,11 @@ public class AutomateTestAction extends TestAction {
 
         try {
             activeSession = automateClient.getSession(this.sessionId);
-            Analytics.trackIframeRequest();
+
+            Analytics analytics = Analytics.getInstance();
+            if (analytics != null) {
+                analytics.trackIframeRequest();
+            }
         } catch (AutomateException aex) {
             lastException = aex;
             return null;
@@ -78,7 +82,10 @@ public class AutomateTestAction extends TestAction {
 
     @JavaScriptMethod
     public void iframeLoadTime(int time) {
-        Analytics.trackIframeLoad(time);
+        Analytics analytics = Analytics.getInstance();
+        if (analytics != null) {
+            analytics.trackIframeLoad(time);
+        }
     }
 
     @Override

@@ -40,7 +40,10 @@ public class AutomateTestDataPublisher extends TestDataPublisher {
     public AutomateTestDataPublisher() {
         // This constructor is only called when the TestDataPublisher is created.
         // This is only when the user explicitly chooses to enable BrowserStack as an additional Test report.
-        Analytics.trackReportingEvent(true);
+        Analytics analytics = Analytics.getInstance();
+        if (analytics != null) {
+            analytics.trackReportingEvent(true);
+        }
     }
 
     @Override
