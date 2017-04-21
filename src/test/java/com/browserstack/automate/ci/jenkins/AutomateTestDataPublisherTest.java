@@ -67,7 +67,7 @@ public class AutomateTestDataPublisherTest {
 
         @Mock
         public void $init(String userName, String accessKey) {
-            Assert.assertEquals("User name not equal to what is set.", DUMMY_BSTACK_USERNAME, userName);
+            Assert.assertEquals("User name not equal to what is set.", DUMMY_BSTACK_USERNAME, userName.substring(0, userName.indexOf('-')));
             Assert.assertEquals("User Access Key not equal to what is set.", DUMMY_BSTACK_ACCESSKEY, accessKey);
         }
 

@@ -67,7 +67,7 @@ public class BrowserStackCredentials extends BaseCredentials implements Standard
 
     @Exported
     public String getUsername() {
-        return username;
+        return username + "-jenkins";
     }
 
     public boolean hasUsername() {
