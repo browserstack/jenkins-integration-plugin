@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>browserstack-integration</artifactId>
-    <version>1.0.8-SNAPSHOT</version>
+    <version>1.0.9-SNAPSHOT</version>
     <packaging>hpi</packaging>
 
     <name>BrowserStack</name>
@@ -120,7 +120,7 @@
         <dependency>
             <groupId>com.browserstack</groupId>
             <artifactId>browserstack-local-java</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.2</version>
         </dependency>
 
         <dependency>
